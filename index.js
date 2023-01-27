@@ -29,6 +29,7 @@ app.post("/form", async (req, res) => {
       to: "moustapha.diakhaby75@gmail.com",
       subject: `La fin de One piece`,
       text: req.body.message,
+      // dhaizdza
     };
     console.log(messageData);
 
@@ -43,12 +44,8 @@ app.post("/form", async (req, res) => {
   }
 });
 
-app.all("*", async (req, res) => {
-  try {
-    res.status(404).json({ message: "this route doesn't exist" });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+app.all("*", (req, res) => {
+  res.status(404).json({ message: "this route doesn't exist" });
 });
 
 app.listen(process.env.PORT, () => {
