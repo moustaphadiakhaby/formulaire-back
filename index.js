@@ -14,8 +14,12 @@ const client = mailgun.client({
   key: process.env.API_KEY,
 });
 
-app.get("/", (req, res) => {
-  res.json("Bienvenue dans le serveur du formulaire 📝");
+app.get("/", async (req, res) => {
+  try {
+    res.json("Bienvenue dans le serveur du formulaire 📝");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 app.post("/form", async (req, res) => {
@@ -34,6 +38,14 @@ app.post("/form", async (req, res) => {
     );
 
     res.json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.all("*", async (req, res) => {
+  try {
+    res.status(404).json({ message: "this route doesn't exist" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
